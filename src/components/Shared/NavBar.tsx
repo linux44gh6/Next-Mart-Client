@@ -1,9 +1,27 @@
-
+"use client"
 import Logo from "@/app/assets/svgs/logo";
 import { Button } from "../ui/button";
-import { Heart, ShoppingBag } from "lucide-react";
+import { Heart, LogOut, ShoppingBag } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import Link from "next/link";
+
+import { logout } from "@/services/authServices";
+import { useUser } from "@/context/userContext";
 
 export default function Navbar() {
+  const {user,setIsLoading }=useUser()
+  const handelLogout = () => {
+    logout()
+    setIsLoading(true)
+  }
   return (
     <header className="border-b w-full">
       <div className="container flex justify-between items-center mx-auto h-16 px-3">
@@ -25,6 +43,37 @@ export default function Navbar() {
           <Button variant="outline" className="rounded-full p-0 size-10">
             <ShoppingBag />
           </Button>
+         { user?  <div className="flex gap-2 items-center">
+         <Link href={'/create-shop'}>
+         <Button variant={'outline'} className=" rounded-full">Crete Shop</Button></Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback>User</AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent >
+              <DropdownMenuLabel >My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">Dashboard</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">My Shop</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="cursor-pointer" onClick={handelLogout}>
+                <LogOut />
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+         </div>:<Link href={'/login'}>
+          <Button variant={'outline'} className=" rounded-full">Login</Button>
+          </Link>
+
+       
+         
+        }
         </nav>
       </div>
     </header>

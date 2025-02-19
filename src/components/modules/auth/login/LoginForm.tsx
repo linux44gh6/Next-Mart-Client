@@ -6,14 +6,16 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import {  FieldValues, SubmitHandler, useForm,  } from "react-hook-form";
-import { userLogin } from "@/services/authServices";
+import { userLogin, verifyReCaptchaToken } from "@/services/authServices";
 import { toast } from "sonner";
 import { loginValidationSchema } from "./loginValidation";
-
+import ReCAPTCHA from "react-google-recaptcha";
+import { useState } from "react";
 const LoginForm = () => {
     const form=useForm({
         resolver:zodResolver(loginValidationSchema)
     })
+    const [recaptcha,setReCaptcha]=useState(false)
     const {formState:{isSubmitting}}=form
     const onSubmit:SubmitHandler<FieldValues>=async(data)=>{
         try{
@@ -22,6 +24,18 @@ const LoginForm = () => {
        toast.success(res?.message)
         }else{
             toast.error(res?.message)
+        }
+        }catch(error){
+            console.log(error)
+        }
+    }
+
+    const handelToChange=async(value:string|null)=>{
+        try{
+        const res= await verifyReCaptchaToken(value as string)
+        console.log(res);
+        if(res?.success){
+            setReCaptcha(true)
         }
         }catch(error){
             console.log(error)
@@ -65,8 +79,11 @@ const LoginForm = () => {
                             </FormItem>
                         )}
                     />
-                   
-                    <Button  className="w-full" type="submit">
+                   <ReCAPTCHA 
+                   sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY}` as string}
+                   onChange={handelToChange}
+                   />
+                    <Button disabled={recaptcha?false:true}  className="w-full" type="submit">
                         {isSubmitting?"Logging...":"Login"}
                     </Button>
                     <p className="text-center font-semibold text-gray-600">Already have an account?<Link className="text-purple-700" href={'/login'}>Login</Link></p>

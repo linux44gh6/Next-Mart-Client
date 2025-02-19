@@ -1,8 +1,16 @@
+"use client"
 
-export default function Home() {
+import { useUser } from "@/context/userContext";
+
+
+const HomePage = () => {
+  const user=useUser()
+  console.log(user);
   return (
-    <div >
-      <h1> well come to my home page</h1>
+    <div>
+      <h1>Wellcom home page</h1>
     </div>
   );
-}
+};
+
+export default HomePage;
