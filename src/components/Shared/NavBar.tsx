@@ -15,12 +15,19 @@ import Link from "next/link";
 
 import { logout } from "@/services/authServices";
 import { useUser } from "@/context/userContext";
+import { usePathname, useRouter } from "next/navigation";
+import { protectedRoutes } from "@/constans";
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const router=useRouter()
   const {user,setIsLoading }=useUser()
   const handelLogout = () => {
     logout()
     setIsLoading(true)
+    if(protectedRoutes.some((route)=>route===pathname)){
+      router.push('/')
+    }
   }
   return (
     <header className="border-b w-full">

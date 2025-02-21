@@ -86,7 +86,7 @@ const LoginForm = () => {
                     <Button disabled={recaptcha?false:true}  className="w-full" type="submit">
                         {isSubmitting?"Logging...":"Login"}
                     </Button>
-                    <p className="text-center font-semibold text-gray-600">Already have an account?<Link className="text-purple-700" href={'/login'}>Login</Link></p>
+                    <p className="text-center font-semibold text-gray-600">Already have an account?<Link className="text-purple-700" href={'/register'}>SignUp</Link></p>
                 </form>
             </Form>
         </div>
