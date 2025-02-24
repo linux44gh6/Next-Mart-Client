@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Button } from "@/components/ui/button";
 import NMImageUploader from "@/components/ui/core/NMImageUploader";
@@ -20,7 +21,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { createCategory } from "@/services/Category";
+import { createCategory } from "@/services/category";
+
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -107,6 +109,7 @@ const CreateCategoryModal = () => {
               ) : (
                 <div className="mt-8">
                   <NMImageUploader
+                    imageFiles={imageFiles}
                     setImageFiles={setImageFiles}
                     setImagePreview={setImagePreview}
                     label="Upload Icon"

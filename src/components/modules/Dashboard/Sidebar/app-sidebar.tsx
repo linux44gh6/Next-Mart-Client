@@ -26,6 +26,8 @@ import { NavMain } from "./nav-main";
 import Link from "next/link";
 import Logo from "@/app/assets/svgs/logo";
 import { NavUser } from "./nav-user";
+import { TUser } from "@/Types";
+import { getUserInfo } from "@/services/authServices";
 
 
 const data = {
@@ -38,12 +40,12 @@ const data = {
     },
     {
       title: "Shop",
-      url: "/user/shop/all-products",
+      url: "/user/shop/products",
       icon: Bot,
       items: [
         {
           title: "Manage Products",
-          url: "/user/shop/all-products",
+          url: "/user/shop/products",
         },
         {
           title: "Manage Categories",
@@ -100,8 +102,16 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+    const [user,setUser]=React.useState<TUser|null>(null)
+    React.useEffect(()=>{
+        const currentUser = async()=>{
+            const userInfo=await getUserInfo()
+            setUser(userInfo as TUser)
+        }
+        currentUser()
+    })
   return (
-    <Sidebar variant="inset" {...props}>
+    <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -122,7 +132,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser />
+        <NavUser user={user as TUser} />
       </SidebarFooter>
     </Sidebar>
   );

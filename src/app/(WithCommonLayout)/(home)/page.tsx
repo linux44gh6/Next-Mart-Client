@@ -1,14 +1,13 @@
 "use client"
-
+import Hero from "@/components/modules/Home/HeroSection/Hero";
 import { useUser } from "@/context/userContext";
-
 
 const HomePage = () => {
   const user=useUser()
   console.log(user);
   return (
     <div>
-      <h1>Wellcom home page</h1>
+      <Hero/>
     </div>
   );
 };
