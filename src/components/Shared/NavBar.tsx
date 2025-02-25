@@ -64,7 +64,7 @@ export default function Navbar() {
               <DropdownMenuLabel >My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">Dashboard</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer"><Link href={`/${user?.role}/dashboard`}>Dashboard</Link></DropdownMenuItem>
               <DropdownMenuItem className="cursor-pointer">My Shop</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="cursor-pointer" onClick={handelLogout}>

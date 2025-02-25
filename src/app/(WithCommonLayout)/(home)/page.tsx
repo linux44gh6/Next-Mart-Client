@@ -1,13 +1,17 @@
-"use client"
-import Hero from "@/components/modules/Home/HeroSection/Hero";
-import { useUser } from "@/context/userContext";
 
-const HomePage = () => {
-  const user=useUser()
-  console.log(user);
+import CategoryPage from "@/components/modules/Home/Category";
+import FeaturedProduct from "@/components/modules/Home/FeaturedProduct";
+import FlasSale from "@/components/modules/Home/FlaseSale";
+import Hero from "@/components/modules/Home/HeroSection/Hero";
+import TopBrands from "@/components/modules/Home/TopBrands/TopBrands";
+const HomePage = async() => {
   return (
     <div>
       <Hero/>
+      <CategoryPage/>
+      <FeaturedProduct/>
+      <FlasSale/>
+      <TopBrands/>
     </div>
   );
 };
