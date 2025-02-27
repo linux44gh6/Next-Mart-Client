@@ -11,8 +11,10 @@ import { IProduct } from "@/Types/product";
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import DiscountModal from "./DisCountModal";
+import PaginationTable from "@/components/ui/core/NMTable/PaginationTable";
+import { TMeta } from "@/Types/meta";
 
-const ManageProducts = ({ products }: { products: IProduct[] }) => {
+const ManageProducts = ({ products,meta }: { products: IProduct[],meta:TMeta }) => {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const router = useRouter();
 
@@ -153,6 +155,7 @@ const ManageProducts = ({ products }: { products: IProduct[] }) => {
         </div>
       </div>
       <NMTable columns={columns} data={products || []} />
+      <PaginationTable totalPage={meta.totalPage} />
     </div>
   );
 };

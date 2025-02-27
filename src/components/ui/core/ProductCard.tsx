@@ -14,7 +14,17 @@ import { IProduct } from "@/Types/product";
 import { Heart, ShoppingCart, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useDispatch } from 'react-redux';
+import { addProduct } from '@/redux/features/cartSlice';
+import { toast } from 'sonner';
 const ProductCard = ({ product }: { product: IProduct }) => {
+  const dispatch = useDispatch();
+  //! perform the redux operation for adding product to cart
+  const addProductToCart = (product:IProduct) => {
+    dispatch(addProduct(product));
+    toast.success("Product added to cart");
+  };
+
   return (
     <motion.div
     initial={{ opacity: 0, scale: 0.8 }}
@@ -86,6 +96,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
             Buy Now
           </Button>
           <Button
+          onClick={()=>addProductToCart(product)}
             disabled={product?.stock === 0}
             variant="outline"
             size="sm"

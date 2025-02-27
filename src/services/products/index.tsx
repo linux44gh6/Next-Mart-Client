@@ -4,7 +4,7 @@ import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 // get all products
-export const getAllProducts = async (page?: string) => {
+export const getAllProducts = async (page?: number) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/product?page=${page}`,
