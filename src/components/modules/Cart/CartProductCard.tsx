@@ -1,11 +1,26 @@
 import { Button } from "@/components/ui/button";
-import { CartProduct } from "@/redux/features/cartSlice";
+import { CartProduct, decrementQunatity, incrementQunatity, removeProduct } from "@/redux/features/cartSlice";
 // import { IProduct } from "@/Types/product";
 
 import { Minus, Plus, Trash } from "lucide-react";
 import Image from "next/image";
+import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 
 export default function CartProductCard({ product }: { product: CartProduct }) {
+  const dispatch=useDispatch()
+  const handleIncrement = (id:string) => {
+    dispatch(incrementQunatity(id));
+  };
+
+  const handleDecrement = (id:string) => {
+     dispatch(decrementQunatity(id));
+  };
+
+  const handelRemove = (id:string) => {
+     dispatch(removeProduct(id));
+     toast.success("Product removed from cart")
+  };
   return (
     <div className="bg-white rounded-lg flex p-5 gap-5">
       <div className="h-full w-32 rounded-md overflow-hidden">
@@ -37,16 +52,16 @@ export default function CartProductCard({ product }: { product: CartProduct }) {
           </h2>
           <div className="flex items-center gap-2">
             <p className="text-gray-500 font-semibold">Quantity</p>
-            <Button variant="outline" className="size-8 rounded-sm">
+            <Button onClick={()=>handleDecrement(product._id)} variant="outline" className="size-8 rounded-sm">
               <Minus />
             </Button>
             <p className="font-semibold text-xl p-2">
               {product?.quantity}
             </p>
-            <Button variant="outline" className="size-8 rounded-sm">
+            <Button onClick={()=>handleIncrement(product._id)} variant="outline" className="size-8 rounded-sm">
               <Plus />
             </Button>
-            <Button variant="outline" className="size-8 rounded-sm">
+            <Button onClick={()=>handelRemove(product._id)} variant="outline" className="size-8 rounded-sm">
               <Trash className="text-red-500/50" />
             </Button>
           </div>
